@@ -1,4 +1,4 @@
-﻿using AutorepairShopApi.Models;
+﻿using Autorepair.Shared.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace AutorepairShopApi.Data

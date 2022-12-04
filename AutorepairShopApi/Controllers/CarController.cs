@@ -1,6 +1,6 @@
 ﻿using AutorepairShopApi.Data;
-using AutorepairShopApi.Models;
-using AutorepairShopApi.ViewModels;
+using Autorepair.Shared.Models;
+using Autorepair.Shared.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -38,6 +38,7 @@ namespace AutorepairShopApi.Controllers
                    Color = c.Color,
                    StateNumber = c.StateNumber,
                    OwnerFIO = c.Owner.FirstName + " " + c.Owner.MiddleName + " " + c.Owner.LastName,
+                   OwnerId = c.OwnerId,
                    VIN = c.VIN,
                    EngineNumber = c.EngineNumber,
                    AdmissionDate = c.AdmissionDate

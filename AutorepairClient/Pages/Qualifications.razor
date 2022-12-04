@@ -11,19 +11,21 @@
                 <td>
                         <label for="fuelType">Название:</label>
             <input name="nameQualification" id="nameQualification" @bind="@nameQualification" />
-                </td>
-                <td>
-            <a class="btn btn-primary" @onclick="FilterQualification">Фильтровать</a>
-                </td>                
+                </td>               
             </tr>
             <tr>
+                <td>
+                    <div class="panel-body">
+                        <a class="btn btn-primary" @onclick="FilterQualification">Фильтровать</a>
+                    </div>
+                </td>
                 <td>
                     <div class="panel-body">
                         <a id="reset" class="btn btn-primary" @onclick="Reset">Сбросить</a>
                     </div>
                 </td>
             </tr>
-        </table>
+</table>
 
 @if (listQualification == null)
 {

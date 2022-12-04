@@ -1,5 +1,5 @@
 ﻿using AutorepairShopApi.Data;
-using AutorepairShopApi.Models;
+using Autorepair.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;

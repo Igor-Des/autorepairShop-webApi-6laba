@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutorepairShopApi", "Autore
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutorepairClient", "AutorepairClient\AutorepairClient.csproj", "{D9D465AA-286A-4004-A985-6E0D1B47AB41}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autorepair.Shared", "Autorepair.Shared\Autorepair.Shared.csproj", "{D6F3B528-D481-4863-9286-C476F52A09E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Autorepair.Shared", "Autorepair.Shared\Autorepair.Shared.csproj", "{D6F3B528-D481-4863-9286-C476F52A09E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
