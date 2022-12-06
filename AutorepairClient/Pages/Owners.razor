@@ -1,0 +1,57 @@
+﻿@page "/owners"
+@using Autorepair.Shared
+@using Autorepair.Shared.Models
+@using Autorepair.Shared.ViewModels
+@using System.Linq
+@inject HttpClient Http
+
+@if (currentListOwner == null)
+{
+    <p><em>Загрузка...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Код владельца</th>
+                <th>Имя</th>
+                <th>Фамилия</th>
+                <th>Отчество</th>
+                <th>Вод.уд.</th>
+                <th>Аддрес</th>
+                <th>Телефон</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var owner in currentListOwner)
+            {
+                <tr>
+                    <td>@owner.OwnerId</td>
+                    <td>@owner.FirstName</td>
+                    <td>@owner.MiddleName</td>
+                    <td>@owner.LastName</td>
+                    <td>@owner.DriverLicenseNumber</td>
+                    <td>@owner.Address</td>
+                    <td>@owner.Phone</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Owner> currentListOwner;
+    private List<Owner> fullListOwner;
+    private int currentCount;
+    private Owner currentOwner = new Owner();
+
+
+    //Инициализация: загрузка списков владельцев авто
+    protected override async Task OnInitializedAsync()
+    {
+        fullListOwner = await Http.GetFromJsonAsync<List<Owner>>("api/Owner");
+        currentListOwner = fullListOwner;
+        currentCount = currentListOwner.Count();
+    }
+}

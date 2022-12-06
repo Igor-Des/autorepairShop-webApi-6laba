@@ -9,7 +9,7 @@
 <table class="table" border="0" >
             <tr>
                 <td>
-                        <label for="fuelType">Название:</label>
+            <label for="nameQualification">Название:</label>
             <input name="nameQualification" id="nameQualification" @bind="@nameQualification" />
                 </td>               
             </tr>
@@ -59,10 +59,9 @@ else
     private List<Qualification> fullListQualification;
     private int currentCount;
     private Qualification currentQualification = new Qualification();
-    private ElementReference saveQualification;
     private string nameQualification = "";
 
-    //Инициализация: загрузка списка топлива
+    // Инициализация всех квалификаций
     protected override async Task OnInitializedAsync()
     {
         fullListQualification = await Http.GetFromJsonAsync<List<Qualification>>("api/Qualification");
@@ -70,7 +69,7 @@ else
         currentCount = listQualification.Count();
     }
 
-    //Фильтрация списка видов топлива
+    // Фильтрация квалификаций по наименованию
     private void FilterQualification()
     {
         listQualification = fullListQualification;
