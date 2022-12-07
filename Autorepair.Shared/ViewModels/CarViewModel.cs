@@ -2,7 +2,7 @@
 using System.Xml.Linq;
 using System;
 
-namespace AutorepairShopApi.ViewModels
+namespace Autorepair.Shared.ViewModels
 {
     public class CarViewModel
     {
@@ -12,6 +12,7 @@ namespace AutorepairShopApi.ViewModels
         public string Color { get; set; }
         public string StateNumber { get; set; }
         public string OwnerFIO { get; set; }
+        public int OwnerId { get; set; }
         public int Year { get; set; }
         public string VIN { get; set; }
         public string EngineNumber { get; set; }

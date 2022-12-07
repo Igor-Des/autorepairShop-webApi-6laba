@@ -1,6 +1,6 @@
 ﻿using AutorepairShopApi.Data;
-using AutorepairShopApi.Models;
-using AutorepairShopApi.ViewModels;
+using Autorepair.Shared.Models;
+using Autorepair.Shared.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -37,11 +37,13 @@ namespace AutorepairShopApi.Controllers
                    Power = c.Power,
                    Color = c.Color,
                    StateNumber = c.StateNumber,
+                   Year = c.Year,
                    OwnerFIO = c.Owner.FirstName + " " + c.Owner.MiddleName + " " + c.Owner.LastName,
+                   OwnerId = c.OwnerId,
                    VIN = c.VIN,
                    EngineNumber = c.EngineNumber,
                    AdmissionDate = c.AdmissionDate
-                });
+                }).OrderBy(c => c.CarId);
             return cars.ToList();
         }
 
@@ -86,7 +88,7 @@ namespace AutorepairShopApi.Controllers
         /// <param name="car">Объект авто</param>
         /// <returns>true/false</returns>
         // PUT api/<CarController>/5
-        [HttpPut("{id}")]
+        [HttpPut]
         public IActionResult Put(int id, [FromBody] Car car)
         {
             if (car == null)

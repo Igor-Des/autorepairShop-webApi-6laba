@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
 using System;
 
-namespace AutorepairShopApi.Models
+namespace Autorepair.Shared.Models
 {
     public class Payment
     {

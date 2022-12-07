@@ -1,0 +1,218 @@
+﻿@page "/cars"
+@using Autorepair.Shared
+@using Autorepair.Shared.Models
+@using Autorepair.Shared.ViewModels
+@using System.Linq
+@inject HttpClient Http
+
+<div class="container">
+    <h3>Автомобили</h3>
+    <form name="carForm">
+        <table class="table" border="0">
+            <tr>
+                <td colspan="3">
+                    <label for="carId" id="typeCRUD" name="typeCRUD">@currentStatus</label>
+                    <input type="hidden" id="CarId" name="CarId" @bind="@currentCar.CarId" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-group">
+                        <label Добавить>Владелец авто:</label>
+                        <select @ref="saveCar" id="OwnerId" name="OwnerId" @bind="@currentCar.OwnerId">
+                            <option value=0 selected>(выбор)</option>
+                            @if (owners == null)
+                            {
+
+                            }
+                            else
+                                @foreach (var owner in owners)
+                                {
+                                    <option value="@owner.OwnerId">@owner.FirstName @owner.MiddleName @owner.LastName</option>
+                                }
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <a class="btn btn-primary" @onclick="FilterCars">Фильтровать</a>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="form-group">
+                        <label for="inc_exp">Бренд:</label>
+                        <input class="form-control" name="Brand" id="Brand" @bind="@currentCar.Brand" />
+                    </div>
+                    <div class="form-group">
+                        <label for="inc_exp">Цвет:</label>
+                        <input class="form-control" name="Color" id="Color" @bind="@currentCar.Color" />
+                    </div>
+                    <div class="form-group">
+                        <label for="inc_exp">Мощность:</label>
+                        <input class="form-control" name="Power" id="Power" @bind="@currentCar.Power" />
+                    </div>
+                    <div class="form-group">
+                        <label for="inc_exp">Гос номер:</label>
+                        <input class="form-control" name="StateNumber" id="StateNumber" @bind="@currentCar.StateNumber" />
+                    </div>
+                    <div class="form-group">
+                        <label for="inc_exp">Год:</label>
+                        <input class="form-control" name="Year" id="Year" @bind="@currentCar.Year" />
+                    </div>
+                    <div class="form-group">
+                        <label for="inc_exp">ВИН:</label>
+                        <input class="form-control" name="VIN" id="VIN" @bind="@currentCar.VIN" />
+                    </div>
+                    <div class="form-group">
+                        <label for="inc_exp">Номер двигателя:</label>
+                        <input class="form-control" name="EngineNumber" id="EngineNumber" @bind="@currentCar.EngineNumber" />
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="date">Дата:</label>
+                        <input class="form-control" name="AdmissionDate" id="AdmissionDate" @bind="currentCar.AdmissionDate" @bind:format="dd-MM-yyyy" />
+                    </div>
+
+
+                    <div class="panel-body">
+                        <a class="btn btn-sm btn-primary" @onclick="SaveCar">Сохранить</a>
+                        <a id="reset" class="btn btn-sm btn-primary" @onclick="Reset">Сбросить</a>
+
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </form>
+    Число записей: @currentCount
+</div>
+@if (currentListCar == null)
+{
+    <p><em>Загрузка...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Код авто</th>
+                <th>ФИО владельца</th>
+                <th>Бренд</th>
+                <th>Цвет</th>
+                <th>Мощность</th>
+                <th>Гос номер</th>
+                <th>Год</th>
+                <th>ВИН</th>
+                <th>Номер двигателя</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var car in currentListCar)
+            {
+                <tr>
+                    <td>@car.CarId</td>
+                    <td>@car.OwnerFIO</td>
+                    <td>@car.Brand</td>
+                    <td>@car.Color</td>
+                    <td>@car.Power</td>
+                    <td>@car.StateNumber</td>
+                    <td>@car.Year</td>
+                    <td>@car.VIN</td>
+                    <td>@car.EngineNumber</td>
+                    <td>@car.AdmissionDate.ToShortDateString()</td>
+                    <td>
+                        <a class='editLink' @onclick="@(e => GetCar(car.CarId))">Выбрать</a> |
+                        <a class='removeLink' @onclick="@(e => DeleteCar(car.CarId))">Удалить</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<CarViewModel> currentListCar;
+    private List<CarViewModel> fullListCar;
+    private List<Owner> owners;
+    private int currentCount;
+    private CarViewModel currentCar = new CarViewModel();
+    private ElementReference saveCar;
+    private string currentStatus = "Добавление";
+
+
+    //Инициализация: загрузка списков авто и владельцев авто
+    protected override async Task OnInitializedAsync()
+    {
+        fullListCar = await Http.GetFromJsonAsync<List<CarViewModel>>("api/Car");
+        currentListCar = fullListCar;
+        owners = await Http.GetFromJsonAsync<List<Owner>>("/api/Owner");
+        currentCount = currentListCar.Count();
+
+    }
+
+    //Фильтрация списка авто
+    private void FilterCars()
+    {
+        currentListCar = fullListCar;
+        if (currentCar.OwnerId > 0)
+        {
+            currentListCar = currentListCar.Where(own => own.OwnerId == currentCar.OwnerId).ToList();
+        }
+        currentCount = currentListCar.Count();
+
+    }
+    //Получение данных для одного авто
+    private async Task GetCar(int carId)
+    {
+        currentStatus = "Редактирование";
+        CarViewModel car = currentListCar.Where(c => c.CarId == carId).First();
+        currentCar = car;
+        await saveCar.FocusAsync();
+
+    }
+    //Удаление данных одного автомобиля
+    private async Task DeleteCar(int carId)
+    {
+        CarViewModel car = currentListCar.Where(c => c.CarId == carId).First();
+        currentListCar.Remove(car);
+        var code = await Http.DeleteAsync("api/Car/" + carId);
+        fullListCar.Remove(car);
+    }
+
+    //Сохранение данных после редактирования или добавления автомобиля
+    private async Task SaveCar()
+    {
+        if (currentCar.CarId > 0 & CheckCar())//редактирование
+        {
+            CarViewModel car = currentListCar.Find(o => o.CarId == currentCar.CarId);
+            car = currentCar;
+            var code = await Http.PutAsJsonAsync("api/Car/", currentCar);
+        }
+        if (currentCar.CarId == 0 & CheckCar())//создание
+        {
+            CarViewModel car = currentCar;
+            var code = await Http.PostAsJsonAsync("api/Car/", currentCar);
+            fullListCar = await Http.GetFromJsonAsync<List<CarViewModel>>("api/Car");
+            currentListCar = fullListCar;
+            currentCount = currentListCar.Count();
+        }
+    }
+    //Сброс значений формы и повторная загрузка списка автомобилей
+    private async Task Reset()
+    {
+        currentStatus = "Добавление";
+        currentCar = new CarViewModel();
+        fullListCar = await Http.GetFromJsonAsync<List<CarViewModel>>("api/Car");
+        currentListCar = fullListCar;
+        currentCount = currentListCar.Count();
+
+    }
+
+    //Проверка корректности заполнения
+    private bool CheckCar()
+    {
+        if (currentCar.OwnerId > 0) return true;
+        else return false;
+    }
+
+}

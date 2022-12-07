@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32819.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutorepairShopApi", "AutorepairShopApi\AutorepairShopApi.csproj", "{5E860E5A-CD17-4978-8151-42DF816BEB8C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutorepairShopApi", "AutorepairShopApi\AutorepairShopApi.csproj", "{5E860E5A-CD17-4978-8151-42DF816BEB8C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutorepairClient", "AutorepairClient\AutorepairClient.csproj", "{D9D465AA-286A-4004-A985-6E0D1B47AB41}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Autorepair.Shared", "Autorepair.Shared\Autorepair.Shared.csproj", "{D6F3B528-D481-4863-9286-C476F52A09E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{5E860E5A-CD17-4978-8151-42DF816BEB8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E860E5A-CD17-4978-8151-42DF816BEB8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E860E5A-CD17-4978-8151-42DF816BEB8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9D465AA-286A-4004-A985-6E0D1B47AB41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9D465AA-286A-4004-A985-6E0D1B47AB41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9D465AA-286A-4004-A985-6E0D1B47AB41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9D465AA-286A-4004-A985-6E0D1B47AB41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6F3B528-D481-4863-9286-C476F52A09E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6F3B528-D481-4863-9286-C476F52A09E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6F3B528-D481-4863-9286-C476F52A09E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6F3B528-D481-4863-9286-C476F52A09E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

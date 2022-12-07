@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
 
-namespace AutorepairShopApi.Models
+namespace Autorepair.Shared.Models
 {
     public class Qualification
     {

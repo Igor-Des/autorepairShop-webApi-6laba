@@ -1,0 +1,94 @@
+﻿@page "/qualifications"
+@using Autorepair.Shared
+@using Autorepair.Shared.Models
+@using System.Linq
+@inject HttpClient Http
+
+<h3>Должности</h3>
+
+<table class="table" border="0" >
+            <tr>
+                <td>
+            <label for="nameQualification">Название:</label>
+            <input name="nameQualification" id="nameQualification" @bind="@nameQualification" />
+                </td>               
+            </tr>
+            <tr>
+                <td>
+                    <div class="panel-body">
+                        <a class="btn btn-primary" @onclick="FilterQualification">Фильтровать</a>
+                    </div>
+                </td>
+                <td>
+                    <div class="panel-body">
+                        <a id="reset" class="btn btn-primary" @onclick="Reset">Сбросить</a>
+                    </div>
+                </td>
+            </tr>
+</table>
+
+@if (listQualification == null)
+{
+    <p><em>Загрузка...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Код должности</th>
+                <th>Название</th>
+                <th>Зарплата</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var qualification in listQualification)
+            {
+                <tr>
+                    <td>@qualification.QualificationId</td>
+                    <td>@qualification.Name</td>
+                    <td>@qualification.Salary</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Qualification> listQualification;
+    private List<Qualification> fullListQualification;
+    private int currentCount;
+    private Qualification currentQualification = new Qualification();
+    private string nameQualification = "";
+
+    // Инициализация всех квалификаций
+    protected override async Task OnInitializedAsync()
+    {
+        fullListQualification = await Http.GetFromJsonAsync<List<Qualification>>("api/Qualification");
+        listQualification = fullListQualification;
+        currentCount = listQualification.Count();
+    }
+
+    // Фильтрация квалификаций по наименованию
+    private void FilterQualification()
+    {
+        listQualification = fullListQualification;
+        if (nameQualification != "")
+        {
+            listQualification = listQualification.Where(q => q.Name.Contains(nameQualification)).ToList();
+        }
+        currentCount = listQualification.Count();
+    }
+
+    //Сброс значений формы и повторная загрузка списка операций
+    private async Task Reset()
+    {
+        nameQualification = "";
+        currentQualification = new Qualification();
+        fullListQualification = await Http.GetFromJsonAsync<List<Qualification>>("api/Qualification");
+        listQualification = fullListQualification;
+        currentCount = listQualification.Count();
+    }
+
+}
+
